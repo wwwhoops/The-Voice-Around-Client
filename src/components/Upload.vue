@@ -7,9 +7,9 @@
                 :before-upload="beforeAvatarUpload">
                 <i class="el-icon-upload"></i>
                 <div>
-                    将文件拖到此处，或<span style="color:blue">修改头像</span>
+                    将文件拖到此处，或单击此框以选择图片
                 </div>
-                <div slot="tip">只能上传jpg/png文件，且不能超过10MB</div>
+                <div slot="tip">只能上传jpg/png文件，且不能超过20MB</div>
             </el-upload>
         </div>
     </div>
@@ -29,7 +29,7 @@ export default {
     methods:{
         //上传地址
         uploadUrl(){
-            return `${this.$store.state.configure.HOST}/consumer/updateConsumerPic?id=${this.userId}`
+            return `${this.$store.state.configure.HOST}/consumer/updateConsumerAvatar?id=${this.userId}`
         },
          //上传成功
         handleAvatarSuccess(res,file){                     

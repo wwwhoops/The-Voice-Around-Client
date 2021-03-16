@@ -1,10 +1,12 @@
 <template>
   <div class="the-header">
     <div class="header-logo" @click="goHome">
-        <svg class="icon">
-            <use xlink:href = "#icon-erji"></use>
+        <svg class="icon" >
+            <image xlink:href = "../assets/img/icon/music.png" 
+            style="width: 100%; height: 100%;"></image>
+            <!-- <img href="../assets/img/icon/music.svg" /> -->
         </svg>
-        <span>music</span>
+        <span>声临其境</span>
     </div>
     <ul class="navbar">
         <li :class="{active: item.name == activeName}" v-for="item in navMsg" :key="item.path" @click="goPage(item.path,item.name)">

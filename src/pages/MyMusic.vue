@@ -5,8 +5,8 @@
                 <img :src="attachImageUrl(avatar)">
             </div>
             <ul class="album-info">
-                <li>昵称:{{username}}</li>
-                <li>性别:{{userSex}}</li>
+                <li>昵称：{{username}}</li>
+                <li>性别：{{userSex}}</li>
                 <li>生日：{{birth}}</li>
                 <li>故乡：{{location}}</li>
             </ul>
@@ -27,7 +27,7 @@
 <script>
 import {mixin} from '../mixins';
 import {mapGetters} from 'vuex';
-import {getUserOfId,getCollectOfUserId,songOfSongId} from '../api/index';
+import {getUserOfId,getCollectOfUserId,songOfSongIdAlias} from '../api/index';
 import AlbumContent from "../components/AlbumContent";
 
 export default {
@@ -62,16 +62,16 @@ export default {
         getMsg(userId){
             getUserOfId(userId)
                 .then(res =>{
-                    this.avatar = res.avatar;
-                    this.username = res.username;
-                    if(res.sex==0){
+                    this.avatar = res.data.avatar;
+                    this.username = res.data.username;
+                    if(res.data.sex==0){
                         this.userSex = '女';
                     }else if (res.sex==1){
                         this.userSex = '男';
                     }
-                    this.birth = this.attachBirth(res.birth);
-                    this.location = res.location;
-                    this.introduction = res.introduction;                    
+                    this.birth = this.attachBirth(res.data.birth);
+                    this.location = res.data.location;
+                    this.introduction = res.data.introduction;                    
                 })
                 .catch(err => {
                     console.log(err);
@@ -81,7 +81,7 @@ export default {
         getCollection(userId){
             getCollectOfUserId(userId)
                 .then(res =>{
-                        this.collection = res;
+                        this.collection = res.data;
                         //通过歌曲id获取歌曲信息   
                         for(let item of this.collection){
                             this.getSongsOfIds(item.songId);
@@ -93,13 +93,16 @@ export default {
         },
         //通过歌曲id获取歌曲信息   
         getSongsOfIds(id){
-            songOfSongId(id)
+            songOfSongIdAlias(id)
                 .then(res =>{
-                        this.collectList.push(res);
-                    })
+                    for(let i of res.data){
+                        this.collectList.push(i);
+                    }
+                })
                 .catch(err => {
                     console.log(err);
                 })
+                this.$store.commit('setListOfSongs',this.collectList);
         }
     }
 }

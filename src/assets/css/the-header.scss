@@ -18,12 +18,14 @@
 .header-logo {
   margin: $header-logo-margin;
   font-size: $font-size-logo;
-  font-weight: bold;
+  // font-weight: bold;   //设置加粗
+  color: #089;          //设置颜色
   white-space: nowrap;
   cursor: pointer;
   .icon {
     @include icon(($header-height / 3) * 2, $color-black);
     vertical-align: middle;
+    // color: #089;        //设置颜色
   }
 }
 

@@ -14,6 +14,8 @@ export const songOfSingerId =(singerId) => get(`song/allSong?singerId=${singerId
 export const songOfSingerIdAlias =(singerId) => get(`song/allSongAlias?singerId=${singerId}`);
 //根据歌曲id查询歌曲对象
 export const songOfSongId =(id) => get(`song/getASongBySongId?songId=${id}`);
+//根据歌曲id查询歌曲和歌手信息
+export const songOfSongIdAlias =(id) => get(`song/getASongBySongIdAlias?songId=${id}`);
 //根据歌曲名字模糊查询歌曲
 export const likeSongOfName =(keywords) => get(`song/getAllSongByKeywords?keywords=${keywords}`);
 
@@ -40,7 +42,7 @@ export const loginIn =(params) => post(`/consumer/login`,params);
 //根据用户id查询该用户的详细信息
 export const getUserOfId =(id) => get(`/consumer/selectInfoById?id=${id}`);
 //更新用户信息
-export const updateUserMsg =(params) => post(`/consumer/update`,params);
+export const updateUserMsg =(consumer) => post(`/consumer/updateConsumerInfo`,consumer);
 
 //下载音乐
 export const download = (url)  => Axios({
@@ -71,6 +73,8 @@ export const getAllComment = (type,id) => {
 
 //===============收藏===================
 //新增收藏
-export const setCollect =(params) => post(`/collect/add`,params);
+export const setCollect =(collect) => post(`/collect/addCollect`,collect);
+//查询歌曲的收藏状态
+export const getACollect =(userId, songId) => get(`/collect/getACollect?userId=${userId}&songId=${songId}`);
 //指定用户的收藏列表
-export const getCollectOfUserId = (userId) => get(`/collect/collectOfUserId?userId=${userId}`);
+export const getCollectOfUserId = (userId) => get(`/collect/getCollectByUserId?userId=${userId}`);

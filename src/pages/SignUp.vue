@@ -27,12 +27,12 @@
             <el-form-item prop="birth" label="生日">
                 <!-- <el-date-picker v-model="registerForm.birth" placeholder="选择日期" style="width: 100%;"></el-date-picker> -->
                 <el-date-picker
-                            v-model="registerForm.birth"
-                            type="date"
-                            placeholder="选择日期"
-                            format="yyyy 年 MM 月 dd 日"
-                            value-format="yyyy-MM-dd">
-                        </el-date-picker>
+                    v-model="registerForm.birth"
+                    type="date"
+                    placeholder="选择日期"
+                    format="yyyy 年 MM 月 dd 日"
+                    value-format="yyyy-MM-dd">
+                </el-date-picker>
             </el-form-item>
             <el-form-item prop="introduction" label="签名">
                 <el-input v-model="registerForm.introduction" placeholder="签名"></el-input>

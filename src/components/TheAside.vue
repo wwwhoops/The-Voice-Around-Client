@@ -13,7 +13,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import { getCollectOfUserId } from '../api/index';
+import { getCollectOfUserId,getACollect } from '../api/index';
 
 export default {
     name: 'the-aside',
@@ -44,6 +44,19 @@ export default {
             let arr = str.split('-');
             return arr[1];
         },
+        //查询歌曲收藏状态
+        getACollectStatus(songId){            
+            getACollect(this.userId, songId)
+                .then(res =>{
+                    if(res == '1'){ //未收藏
+                        this.$store.commit('setIsActive',false);
+                    }else if(res == '2'){ //已收藏
+                        this.$store.commit('setIsActive',true);
+                    }else{
+                        this.notify(res,'error');
+                    }
+                })           
+        },
         //播放
         toplay: function(id,url,pic,index,songName,singerName,lyric){
             this.$store.commit('setId',id);
@@ -54,17 +67,20 @@ export default {
             this.$store.commit('setArtist',songName);
             this.$store.commit('setLyric',this.parseLyric(lyric));
             this.$store.commit('setIsActive',false);
-            if(this.loginIn){
-                getCollectOfUserId(this.userId)
-                    .then(res =>{
-                        for(let item of res){
-                            if(item.songId == id){
-                                this.$store.commit('setIsActive',true);
-                                break;
-                            }
-                        }
-                    })
-            }
+            //查询歌曲收藏状态
+            this.getACollectStatus(id)
+            console.log(id, 'iddddddddddddddd')
+            // if(this.loginIn){
+            //     getCollectOfUserId(this.userId)
+            //         .then(res =>{
+            //             for(let item of res){
+            //                 if(item.songId == id){
+            //                     this.$store.commit('setIsActive',true);
+            //                     break;
+            //                 }
+            //             }
+            //         })
+            // }
         },
         //解析歌词
         parseLyric(text){

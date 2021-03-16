@@ -83,7 +83,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import { download,setCollect,getCollectOfUserId } from '../api/index';
+import { download,setCollect,getCollectOfUserId,getACollect } from '../api/index';
 
 export default {
     name: 'play-bar',
@@ -98,6 +98,7 @@ export default {
             volume: 50,             //音量，默认一半
             toggle: true,            //显示隐藏播放器页面
             openLyric: false,    //歌词是否打开
+            collect: {},         //收藏对象
         }
     },
     computed: {
@@ -289,17 +290,19 @@ export default {
                 this.$store.commit('setArtist',this.listOfSongs[this.listIndex].singerName);
                 this.$store.commit('setLyric',this.parseLyric(this.listOfSongs[this.listIndex].songLyric));
                 this.$store.commit('setIsActive',false);
-                if(this.loginIn){
-                    getCollectOfUserId(this.userId)
-                        .then(res =>{
-                            for(let item of res){
-                                if(item.songId == id){
-                                    this.$store.commit('setIsActive',true);
-                                    break;
-                                }
-                            }
-                        })
-                }
+                //查询歌曲收藏状态
+                this.getACollectStatus(this.listOfSongs[this.listIndex].songId)
+                // if(this.loginIn){
+                //     getCollectOfUserId(this.userId)
+                //         .then(res =>{
+                //             for(let item of res){
+                //                 if(item.songId == id){
+                //                     this.$store.commit('setIsActive',true);
+                //                     break;
+                //                 }
+                //             }
+                //         })
+                // }
             }
         },
         //  //获取名字前半部分--歌手名
@@ -374,22 +377,40 @@ export default {
                 console.log(err);
             })
         },
+        //查询歌曲收藏状态
+        getACollectStatus(songId){            
+            getACollect(this.userId, songId)
+                .then(res =>{
+                    if(res == '1'){ //未收藏
+                        this.$store.commit('setIsActive',false);
+                    }else if(res == '2'){ //已收藏
+                        this.$store.commit('setIsActive',true);
+                    }else{
+                        this.notify(res,'error');
+                    }
+                })           
+        },
         //收藏
         collection() {
             if(this.loginIn){
-                var params = new URLSearchParams();
-                params.append('userId',this.userId);
-                params.append('type',0);
-                params.append('songId',this.id);
-                setCollect(params)
+                // var params = new URLSearchParams();
+                // params.append('userId',this.userId);
+                // params.append('type',0);
+                // params.append('songId',this.id);
+                this.collect.userId = this.userId;
+                this.collect.type = 0;
+                this.collect.songId = this.id;
+                var collect1 = this.collect;
+                setCollect(collect1)
                     .then(res =>{
                         if(res.code == 1){
                             this.$store.commit('setIsActive',true);
-                            this.notify('收藏成功','success');
+                            this.notify(res.message,'success');
                         }else if(res.code == 2){
-                            this.notify('已收藏','warning');
+                            this.$store.commit('setIsActive',false);
+                            this.notify(res.message,'success');
                         }else{
-                            this.notify('收藏失败','error');
+                            this.notify(res.message,'error');
                         }
                     })
             }else{

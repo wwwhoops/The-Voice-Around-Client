@@ -26,7 +26,14 @@
                     <el-input v-model="registerForm.email" placeholder="邮箱"></el-input>
                 </el-form-item>
                 <el-form-item prop="birth" label="生日">
-                    <el-date-picker type='date' :editable="false" v-model="registerForm.birth" placeholder="选择日期" style="width: 100%;"></el-date-picker>
+                    <!-- <el-date-picker type='date' :editable="false" v-model="registerForm.birth" placeholder="选择日期" style="width: 100%;"></el-date-picker> -->
+                    <el-date-picker
+                            v-model="registerForm.birth"
+                            type="date"
+                            placeholder="选择日期"
+                            format="yyyy 年 MM 月 dd 日"
+                            value-format="yyyy-MM-dd">
+                    </el-date-picker>
                 </el-form-item>
                 <el-form-item prop="introduction" label="签名">
                     <el-input v-model="registerForm.introduction" placeholder="签名"></el-input>
@@ -68,7 +75,8 @@ export default {
                 location: ''       //地区
             },
             cities: [],            //所有的地区--省
-            rules: {}               //表单提交的规则
+            rules: {},               //表单提交的规则
+            consumer: {},           //用户对象
         }        
     },
     computed:{
@@ -87,14 +95,14 @@ export default {
         getMsg(userId){
             getUserOfId(userId)
                 .then(res =>{
-                    this.registerForm.username = res.username;
-                    this.registerForm.password = res.password;
-                    this.registerForm.sex = res.sex;
-                    this.registerForm.phoneNum = res.phoneNum;
-                    this.registerForm.email = res.email;
-                    this.registerForm.birth = res.birth;
-                    this.registerForm.introduction = res.introduction;
-                    this.registerForm.location = res.location;
+                    this.registerForm.username = res.data.username;
+                    this.registerForm.password = res.data.password;
+                    this.registerForm.sex = res.data.sex;
+                    this.registerForm.phoneNum = res.data.phoneNum;
+                    this.registerForm.email = res.data.email;
+                    this.registerForm.birth = res.data.birth;
+                    this.registerForm.introduction = res.data.introduction;
+                    this.registerForm.location = res.data.location;
                                 
                 })
                 .catch(err => {
@@ -103,19 +111,18 @@ export default {
         },
         saveMsg(){
             let _this = this;
-            let d = new Date(this.registerForm.birth);
-            let datetime = d.getFullYear() + '-' +(d.getMonth() + 1) +'-' + d.getDate();
-            let params = new URLSearchParams();
-            params.append('id',this.userId);
-            params.append('username',this.registerForm.username);
-            params.append('password',this.registerForm.password);
-            params.append('sex',this.registerForm.sex);
-            params.append('phoneNum',this.registerForm.phoneNum);
-            params.append('email',this.registerForm.email);
-            params.append('birth',datetime);
-            params.append('introduction',this.registerForm.introduction);
-            params.append('location',this.registerForm.location);
-            updateUserMsg(params)
+
+            this.consumer.id = this.userId;
+            this.consumer.username = this.registerForm.username;
+            this.consumer.password = this.registerForm.password;
+            this.consumer.sex = this.registerForm.sex;
+            this.consumer.phoneNum = this.registerForm.phoneNum;
+            this.consumer.email = this.registerForm.email;
+            this.consumer.birth = this.registerForm.birth;
+            this.consumer.introduction = this.registerForm.introduction;
+            this.consumer.location = this.registerForm.location;
+            var consumer1 = this.consumer;
+            updateUserMsg(consumer1)
                 .then(res => {
                     if(res.code == 1){
                         _this.$store.commit('setUsername',this.registerForm.username);
