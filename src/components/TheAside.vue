@@ -69,7 +69,6 @@ export default {
             this.$store.commit('setIsActive',false);
             //查询歌曲收藏状态
             this.getACollectStatus(id)
-            console.log(id, 'iddddddddddddddd')
             // if(this.loginIn){
             //     getCollectOfUserId(this.userId)
             //         .then(res =>{

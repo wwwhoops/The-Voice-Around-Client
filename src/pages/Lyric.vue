@@ -36,14 +36,11 @@ export default {
         ])
     },
     created(){
-        // this.lyric111 = this.$route.query.lyric;
-        this.lyr = this.lyric;
-        // console.log(this.lyric111, 'lyric111');
-        
+        this.lyr = this.lyric;        
     },
     watch:{
         id:function(){
-            this.lyr = this.parseLyric(this.listOfSongs[this.listIndex].lyric)
+            this.lyr = this.parseLyric(this.listOfSongs[this.listIndex].songLyric)
         },
         curTime: function(){
             if(this.lyr.length>0){

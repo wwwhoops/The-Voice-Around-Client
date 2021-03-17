@@ -74,7 +74,6 @@ export const mixin = {
             this.$store.commit('setIsActive',false);
             //查询歌曲收藏状态
             this.getACollectStatus(id)
-            console.log(id, 'iddddddddddddddd11111111111111')
             // if(this.loginIn){
             //     getCollectOfUserId(this.userId)
             //         .then(res =>{
