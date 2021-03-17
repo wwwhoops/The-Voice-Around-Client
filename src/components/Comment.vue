@@ -24,7 +24,7 @@
                         <li class="content">{{item.content}}</li>
                     </ul>
                 </div>
-                <div class="up" ref="up" @click="postUp(item.id,item.up,index)">
+                <div class="up" ref="up" @click="postUp(item.id,userId,index)">
                     <svg class="icon">
                         <use xlink:href="#icon-zan"></use>
                     </svg>
@@ -134,19 +134,15 @@ export default {
                     })
         },
         //给某一个评论点赞
-        postUp(id,up,index){
+        postUp(id,userId,index){
             if(this.loginIn){
-                let params = new URLSearchParams();
-               
-                params.append('id',id);
-                params.append('up',up+1);
-                setLike(params)
+                setLike(id, userId)
                     .then(res => {
                         if(res.code == 1){
                             this.$refs.up[index].children[0].style.color = '#2796cd';
                             this.getComment();
                         }else{
-                            this.notify('点赞失败','error');
+                            this.notify(res.message,'error');
                         }
                     })
                     .catch(err =>{

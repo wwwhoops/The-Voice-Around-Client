@@ -61,7 +61,7 @@ export const getRankOfSongListId = (songListId) => get(`/evaluation/averageScore
 //提交评论
 export const setComment =(comment) => post(`/comment/addComment`,comment);
 //点赞
-export const setLike =(params) => post(`/comment/like`,params);
+export const setLike =(id, userId) => get(`/comment/like?commentId=${id}&userId=${userId}`);
 //返回当前歌单或歌曲的评论列表
 export const getAllComment = (type,id) => {
     if(type == 0){              //歌曲

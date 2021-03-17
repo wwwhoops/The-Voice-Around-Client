@@ -3,7 +3,7 @@
         <div class="the-aside" v-if="showAside">
             <h2 class="title">播放列表</h2>
             <ul class="menus">
-                <li v-for="(item,index) in listOfSongs" :key="index" :class="{'is-play': id==item.id}"
+                <li v-for="(item,index) in listOfSongs" :key="index" :class="{'is-play': id==item.songId}"
                 @click="toplay(item.songId, item.songUrl, item.songPic, index, item.songName, item.singerName, item.songLyric)">
                     {{item.songName}} - {{item.singerName}}
                 </li>

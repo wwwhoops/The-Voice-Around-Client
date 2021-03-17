@@ -1,7 +1,7 @@
 <template>
     <div class="the-footer">
-        <p>关于 | 帮助 |条款 |反馈</p>
-        <p>Copyright ©2021 Contact: talitah7196@163.com</p>
+        <p>关于 | 帮助 | 条款 | 反馈</p>
+        <p>Copyright ©2021 Touch: taliyah7196@163.com</p>
     </div>
 </template>
 <script>

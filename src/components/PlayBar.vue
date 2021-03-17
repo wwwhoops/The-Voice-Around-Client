@@ -355,6 +355,10 @@ export default {
                 this.openLyric = false;
             }
         },
+        //传递歌词到歌词页面
+        // toLyricWithLyric(lyric){
+        //     this.$router.push({path: `/lyric`,query:{lyric}});
+        // },
         //下载音乐
         download() {
             download(this.url)

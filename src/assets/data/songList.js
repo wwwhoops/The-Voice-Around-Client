@@ -5,7 +5,7 @@ const songStyle = [
     {name:'欧美'},
     {name:'日韩'},
     {name:'摇滚'},
-    {name:'轻音乐'},
+    {name:'民谣'},
     {name:'流行'},
     {name:'其他'}    
 ]

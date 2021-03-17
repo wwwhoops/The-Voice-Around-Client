@@ -22,7 +22,8 @@ export default {
     mixins: [mixin],
     data(){
         return {
-            lyr: []         //当前歌曲的歌词
+            lyr: [],         //当前歌曲的歌词
+            // lyric111: []  //在歌词页面上下曲切换传递的歌词
         }
     },
     computed: {
@@ -35,7 +36,10 @@ export default {
         ])
     },
     created(){
+        // this.lyric111 = this.$route.query.lyric;
         this.lyr = this.lyric;
+        // console.log(this.lyric111, 'lyric111');
+        
     },
     watch:{
         id:function(){

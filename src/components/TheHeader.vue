@@ -14,7 +14,7 @@
         </li>
         <li>
             <div class="header-search">
-                <input type="text" placeholder="搜索音乐" @keyup.enter="goSearch()" v-model="keywords">
+                <input type="text" placeholder="搜索音乐/歌手/歌单" @keyup.enter="goSearch()" v-model="keywords">
                 <div class="search-btn" @click="goSearch()">
                     <svg class="icon">
                         <use xlink:href = "#icon-sousuo"></use>
