@@ -9,7 +9,8 @@
   overflow: hidden;
   @include layout(center, center);
   .icon {
+    // @include icon(6.5em, $color-blue-dark);
     @include icon(6.5em, $color-blue-dark);
-    transform: rotate(-30deg);
+    transform: rotate(0deg);
   }
 }
