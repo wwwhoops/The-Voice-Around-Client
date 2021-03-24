@@ -14,6 +14,11 @@ import SongListAlbum from '@/pages/SongListAlbum'
 
 
 Vue.use(Router)
+//解决重复点击相同路由报错的问题
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 export default new Router({
   routes: [    

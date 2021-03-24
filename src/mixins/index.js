@@ -1,5 +1,5 @@
 import {mapGetters} from 'vuex';
-import {likeSongOfName,getCollectOfUserId,getACollect } from '../api/index';
+import {likeSongOfName,getACollect } from '../api/index';
 
 export const mixin = {
     computed: {
@@ -74,17 +74,6 @@ export const mixin = {
             this.$store.commit('setIsActive',false);
             //查询歌曲收藏状态
             this.getACollectStatus(id)
-            // if(this.loginIn){
-            //     getCollectOfUserId(this.userId)
-            //         .then(res =>{
-            //             for(let item of res){
-            //                 if(item.songId == id){
-            //                     this.$store.commit('setIsActive',true);
-            //                     break;
-            //                 }
-            //             }
-            //         })
-            // }
         },
         //解析歌词
         parseLyric(text){

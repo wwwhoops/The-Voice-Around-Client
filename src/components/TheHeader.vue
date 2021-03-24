@@ -96,7 +96,9 @@ export default {
           }          
       },
       goSearch(){
-          this.$router.push({path:'/search',query:{keywords: this.keywords}})
+        //在路由切换时提交一个时间戳t，同时在App.vue的router-view标签中加上key属性，值为传入的时间戳
+        //  即可实现当重复点击相同路由时路由的刷新
+        this.$router.push({path:'/search',query:{keywords: this.keywords, t: Date.now()}})
       },
       //获取图片地址
       attachImageUrl (srcUrl) {
