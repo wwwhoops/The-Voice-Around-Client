@@ -2,15 +2,16 @@
 @import "global.scss";
 
 .login-logo {
-  background-color: $color-blue-light;
-  height: 100vh;
-  width: 50vw;
+  // background-color: $color-blue-light;
+  height: 100%;
+  width: 100%;
   min-width: 650px;
   overflow: hidden;
   @include layout(center, center);
   .icon {
     // @include icon(6.5em, $color-blue-dark);
-    @include icon(6.5em, $color-blue-dark);
-    transform: rotate(0deg);
+    // @include icon(3.0m, $color-blue-dark);
+    height: 100%;
+    width: 100%;
   }
 }

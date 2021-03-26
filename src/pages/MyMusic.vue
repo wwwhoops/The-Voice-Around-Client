@@ -66,12 +66,12 @@ export default {
                     this.username = res.data.username;
                     if(res.data.sex==0){
                         this.userSex = '女';
-                    }else if (res.sex==1){
+                    }else if (res.data.sex==1){
                         this.userSex = '男';
                     }
                     this.birth = this.attachBirth(res.data.birth);
                     this.location = res.data.location;
-                    this.introduction = res.data.introduction;                    
+                    this.introduction = res.data.introduction;            
                 })
                 .catch(err => {
                     console.log(err);

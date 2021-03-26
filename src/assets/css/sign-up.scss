@@ -3,11 +3,12 @@
 
 .signUp {
   position: absolute;
-  top: $header-height + 20px;
-  background-color: $color-white;
+  top: $header-height * 2;
+  // background-color: $color-white;
+  background-color: #FFC1C1;
   border-radius: 10px;
   width: 350px;
-  margin-left: 1200px;
+  margin-left: 6%;
   padding: 30px 30px;
 
   .signUp-head {

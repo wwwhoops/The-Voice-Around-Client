@@ -3,7 +3,7 @@
     <!-- <svg class="icon">
         <use xlink:href="#icon-erji"></use>
     </svg> -->
-    <img class="icon" src="../assets/img/icon/music.png">
+    <img class="icon" src="../assets/img/background-test.jpg">
 </div>
 </template>
 <script>

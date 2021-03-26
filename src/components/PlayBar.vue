@@ -215,6 +215,7 @@ export default {
         },
         //拖拽结束
         mouseup(){
+            // $(this).unbind('mousemove'); //移除鼠标的移动事件
             this.tag = false;
         },
         //拖拽中
@@ -292,29 +293,9 @@ export default {
                 this.$store.commit('setIsActive',false);
                 //查询歌曲收藏状态
                 this.getACollectStatus(this.listOfSongs[this.listIndex].songId)
-                // if(this.loginIn){
-                //     getCollectOfUserId(this.userId)
-                //         .then(res =>{
-                //             for(let item of res){
-                //                 if(item.songId == id){
-                //                     this.$store.commit('setIsActive',true);
-                //                     break;
-                //                 }
-                //             }
-                //         })
-                // }
+                
             }
         },
-        //  //获取名字前半部分--歌手名
-        // replaceLName(str){
-        //     let arr = str.split('-');
-        //     return arr[0];
-        // },
-        // //获取名字后半部分--歌名
-        // replaceFName(str){
-        //     let arr = str.split('-');
-        //     return arr[1];
-        // },
         //解析歌词
         parseLyric(text){
             let lines = text.split("\n");                   //将歌词按行分解成数组
