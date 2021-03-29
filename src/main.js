@@ -9,7 +9,15 @@ import '@/assets/js/iconfont.js'
 import '@/assets/js/iconfont1.js'
 import '@/assets/js/iconfont2.js'
 import '@/assets/js/iconfont3.js'
-
+import QRCode from 'qrcodejs2'
+Vue.prototype.$QRCode = function()
+{
+  let qrcode = new QRCode('qrcode', {
+    width: 232,  // 设置宽度
+    height: 232, // 设置高度
+    text: '12345',
+  });
+};
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false

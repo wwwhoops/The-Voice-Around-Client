@@ -15,7 +15,7 @@
             
             <div class="login-btn">
                 <el-button @click="goSignUp">注册</el-button>
-                <el-button type="primary" @click="handleLoginIn">登录</el-button>
+                <el-button type="primary" @click="handleLoginIn" native-type="submit">登录</el-button>
             </div>
         </el-form>
     </div>

@@ -39,9 +39,10 @@
                     <el-input v-model="registerForm.introduction" placeholder="签名"></el-input>
                 </el-form-item>
                 <el-form-item prop="location" label="地区">
-                    <el-select v-model="registerForm.location" placeholder="地区" style="width: 100%;">
+                    <!-- <el-select v-model="registerForm.location" placeholder="地区" style="width: 100%;">
                         <el-option v-for=" item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                    </el-select>
+                    </el-select> -->
+                    <v-distpicker v-model="registerForm.location" placeholder="地区" style="width: 100%;" @selected="regionSelectOfUpdate">{{}}</v-distpicker>
                 </el-form-item>
             </el-form>
             <div class="btn">
@@ -58,6 +59,7 @@ import {mapGetters} from 'vuex'
 import {rules,cities} from '../assets/data/form'
 import {mixin} from '../mixins'
 import {getUserOfId,updateUserMsg} from '../api/index'
+import VDistpicker from "v-distpicker"
 
 export default {
     name: 'info',
@@ -72,12 +74,16 @@ export default {
                 email: '',          //邮箱
                 birth: '',          //生日
                 introduction: '',   //签名
-                location: ''       //地区
+                location: '',        //地区
+                // location: {},        //地区
             },
             cities: [],            //所有的地区--省
             rules: {},               //表单提交的规则
             consumer: {},           //用户对象
         }        
+    },
+    components: {
+        "v-distpicker":VDistpicker
     },
     computed:{
         ...mapGetters([
@@ -92,6 +98,14 @@ export default {
         this.getMsg(this.userId);
     },
     methods:{
+        //地区选择
+        regionSelectOfUpdate(data){
+            var province = data.province.value;
+            var city = data.city.value;
+            var area = data.area.value;
+            // console.log(data,'data')
+            this.registerForm.location = province + city + area
+        },
         getMsg(userId){
             getUserOfId(userId)
                 .then(res =>{
@@ -103,7 +117,6 @@ export default {
                     this.registerForm.birth = res.data.birth;
                     this.registerForm.introduction = res.data.introduction;
                     this.registerForm.location = res.data.location;
-                                
                 })
                 .catch(err => {
                     console.log(err);

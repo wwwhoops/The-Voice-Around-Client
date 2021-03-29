@@ -34,13 +34,14 @@
                     value-format="yyyy-MM-dd">
                 </el-date-picker>
             </el-form-item>
-            <el-form-item prop="introduction" label="签名">
+            <!-- <el-form-item prop="introduction" label="签名">
                 <el-input v-model="registerForm.introduction" placeholder="签名"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item prop="location" label="地区">
-                <el-select v-model="registerForm.location" placeholder="地区" style="width: 100%;">
+                <!-- <el-select v-model="registerForm.location" placeholder="地区" style="width: 100%;">
                     <el-option v-for=" item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                </el-select>
+                </el-select> -->
+                <v-distpicker v-model="registerForm.location" placeholder="地区" style="width: 100%;" @selected="regionSelectOfInsert"></v-distpicker>
             </el-form-item>
             <div class="login-btn">
                 <el-button @click="goback(-1)">取消</el-button>
@@ -55,12 +56,14 @@ import loginLogo from '../components/LoginLogo'
 import {rules,cities} from '../assets/data/form'
 import {mixin} from '../mixins'
 import {SignUp} from '../api/index'
+import VDistpicker from "v-distpicker"
 
 export default {
     name: 'sing-up',
     mixins: [mixin],
     components: {
-        loginLogo
+        loginLogo,
+        "v-distpicker":VDistpicker
     },
     data() {
         return {
@@ -84,6 +87,13 @@ export default {
         this.cities = cities;
     },
     methods:{
+        //地区选择
+        regionSelectOfInsert(data){
+            var province = data.province.value
+            var city = data.city.value
+            var area = data.area.value  
+            this.registerForm.location = province + city + area
+        },
         SignUp(){
             let _this = this;
             this.consumer.username = this.registerForm.username;
@@ -99,9 +109,9 @@ export default {
             SignUp(consumer)
                 .then(res => {
                     if(res.code == 1){
-                        _this.notify(res.message,'success');
+                        _this.notify('注册成功','success');
                         setTimeout(function(){
-                            _this.$router.push({path: '/'});
+                            _this.$router.push({path: '/login-in'});
                         },2000);
                     }else{
                         _this.notify(res.message,'error');
