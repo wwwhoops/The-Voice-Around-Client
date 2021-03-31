@@ -10,6 +10,14 @@
                     {{tempList.introduction}}
                 </span>
             </div>
+            <br>
+            <br>
+            <div class="album-info">
+                <h4>风格</h4>
+                <span>
+                    {{tempList.style}}
+                </span>
+            </div>
         </div>
         <div class="album-content">
             <div class="album-title">

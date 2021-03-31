@@ -34,6 +34,11 @@
   }
   .item-title {
     width: 30%;
+    overflow: hidden;
+    text-overflow:ellipsis;
+  }
+  .item-title:hover{
+      overflow: visible;
   }
   .item-name {
     width: 25%;

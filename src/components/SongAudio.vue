@@ -45,7 +45,6 @@ export default {
         startPlay(){
             let player = this.$refs.player;
             this.$store.commit('setDuration',player.duration);
-            //开始播放
             player.play();
             this.$store.commit('setIsPlay',true);
         },

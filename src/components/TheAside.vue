@@ -13,7 +13,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import { getCollectOfUserId,getACollect } from '../api/index';
+import { increasePlayCount,getACollect } from '../api/index';
 
 export default {
     name: 'the-aside',
@@ -69,6 +69,8 @@ export default {
             this.$store.commit('setIsActive',false);
             //查询歌曲收藏状态
             this.getACollectStatus(id)
+            //根据歌曲id, 将歌曲的播放量增加1
+            this.increasePlayback(id);
             // if(this.loginIn){
             //     getCollectOfUserId(this.userId)
             //         .then(res =>{
@@ -80,6 +82,10 @@ export default {
             //             }
             //         })
             // }
+        },
+        //根据歌曲id，将歌曲播放量+1
+        increasePlayback(songId){
+            increasePlayCount(songId);
         },
         //解析歌词
         parseLyric(text){

@@ -48,6 +48,21 @@
                 </div>
                 <!-- 播放结束时间 -->
                 <div class="left-time">{{songTime}}</div>
+                <!-- 播放顺序 -->
+                <div class="item" @click="changePlayMethod(playMethod)">
+                    <svg class="icon" v-if="playMethod == '列表循环'">
+                        <image xlink:href = "../assets/img/icon/sequence.png" 
+                            style="width: 80%; height: 80%;"></image>
+                    </svg>
+                    <svg class="icon" v-if="playMethod == '单曲循环'">
+                        <image xlink:href = "../assets/img/icon/circulation.png" 
+                            style="width: 80%; height: 80%;"></image>
+                    </svg>
+                    <svg class="icon" v-if="playMethod == '随机播放'">
+                        <image xlink:href = "../assets/img/icon/random.png" 
+                            style="width: 80%; height: 80%;"></image>
+                    </svg>
+                </div>
                 <!-- 音量 -->
                 <div class="item item-volume">
                     <svg v-if="volume == 0" class="icon">
@@ -83,7 +98,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import { download,setCollect,getCollectOfUserId,getACollect } from '../api/index';
+import { download,setCollect,increasePlayCount,getACollect } from '../api/index';
 
 export default {
     name: 'play-bar',
@@ -99,6 +114,9 @@ export default {
             toggle: true,            //显示隐藏播放器页面
             openLyric: false,    //歌词是否打开
             collect: {},         //收藏对象
+            playMethods: ['列表循环', '单曲循环', '随机播放'],       //播放方式（列表循环、单曲循环、随机播放） 
+            playMethod: '列表循环',       //默认播放方式   
+            randomIndex: 1,              //随机播放前一首被随机的歌曲在播放列表中的位置  
         }
     },
     computed: {
@@ -120,6 +138,7 @@ export default {
             'loginIn',              //用户是否已登录
             'userId',               //当前登录用户的id
             'isActive',             //当前播放的歌曲是否已收藏
+            'showMethod',            //是否显示播放顺序列表
         ])
     },
     watch:{
@@ -143,7 +162,7 @@ export default {
         //自动播放下一首
         autoNext(){
             this.next();
-        }
+        },
     },
     mounted(){
         this.progressLength = this.$refs.progress.getBoundingClientRect().width;
@@ -157,8 +176,22 @@ export default {
         document.addEventListener('click',function(){
             document.querySelector('.volume').classList.remove('show-volume');
         },false);
+        this.playNum = JSON.parse(sessionStorage.getItem('playNum'));
     },
     methods: {
+        //切换播放顺序
+        changePlayMethod(playMethod){
+            if(playMethod == '列表循环'){
+                this.playMethod = this.playMethods[1];
+            }
+            if(playMethod == '单曲循环'){
+                this.playMethod = this.playMethods[2];
+            }
+            if(playMethod == '随机播放'){
+                this.playMethod = this.playMethods[0];
+            }
+        },
+
         //提示信息
         notify(title,type) {
             this.$notify({
@@ -261,29 +294,70 @@ export default {
         },
         //上一首
         prev(){
-            if(this.listIndex != -1 && this.listOfSongs.length > 1){    //当前处于不可能状态或者只有只有一首音乐的时候不执行）
-                if(this.listIndex > 0){                                 //不是第一首音乐
-                    this.$store.commit('setListIndex',this.listIndex - 1);  //直接返回上一首
-                }else{                                                  //当前是第一首音乐
-                    this.$store.commit('setListIndex',this.listOfSongs.length - 1);  //切换到倒数第一首
+            if(this.playMethod == '列表循环'){
+                if(this.listIndex != -1 && this.listOfSongs.length > 1){    //当前处于不可能状态或者只有只有一首音乐的时候不执行）
+                    if(this.listIndex > 0){                                 //不是第一首音乐
+                        this.$store.commit('setListIndex',this.listIndex - 1);  //直接返回上一首
+                    }else{                                                  //当前是第一首音乐
+                        this.$store.commit('setListIndex',this.listOfSongs.length - 1);  //切换到倒数第一首
+                    }
+                    this.toplay(this.listOfSongs[this.listIndex].songUrl);
                 }
-                this.toplay(this.listOfSongs[this.listIndex].songUrl);
             }
+            if(this.playMethod == '单曲循环'){
+                if(this.listIndex != -1){    //当前处于不可能状态的时候不执行）
+                    // this.$store.commit('setListIndex',this.listIndex);  //循环
+                    this.$store.commit('setIsPlay', true);
+                    this.toplay(this.listOfSongs[this.listIndex].songUrl);
+                }
+            }
+            if(this.playMethod == '随机播放'){
+                if(this.listIndex != -1 && this.listOfSongs.length > 1){    //当前处于不可能状态或者只有只有一首音乐的时候不执行）
+                    var randomIndex = Math.round(Math.random()*this.listOfSongs.length)   // 生成随机整数
+                    if(randomIndex == this.randomIndex){
+                        randomIndex = Math.round(Math.random()*this.listOfSongs.length)   // 和上一次生成的随机数相同就重新生成
+                    }
+                    this.randomIndex = randomIndex; //将本次随机数存储起来，如果下次一样，就重新随机
+                    this.$store.commit('setListIndex',randomIndex);  //随机播放
+                    this.toplay(this.listOfSongs[this.listIndex].songUrl);
+                }
+            }
+            
         },
         //下一首
         next(){
-            if(this.listIndex != -1 && this.listOfSongs.length > 1){    //当前处于不可能状态或者只有只有一首音乐的时候不执行）
-                if(this.listIndex < this.listOfSongs.length - 1){                                 //不是最后一首音乐
-                    this.$store.commit('setListIndex',this.listIndex + 1);  //直接返回下一首
-                }else{                                                      //当前是最后一首音乐
-                    this.$store.commit('setListIndex',0);  //切换到第一首
+            if(this.playMethod == '列表循环'){
+                if(this.listIndex != -1 && this.listOfSongs.length > 1){    //当前处于不可能状态或者只有只有一首音乐的时候不执行）
+                    if(this.listIndex < this.listOfSongs.length - 1){                                 //不是最后一首音乐
+                        this.$store.commit('setListIndex',this.listIndex + 1);  //直接返回下一首
+                    }else{                                                      //当前是最后一首音乐
+                        this.$store.commit('setListIndex',0);  //切换到第一首
+                    }
+                    this.toplay(this.listOfSongs[this.listIndex].songUrl);
                 }
-                this.toplay(this.listOfSongs[this.listIndex].songUrl);
             }
+            if(this.playMethod == '单曲循环'){
+                if(this.listIndex != -1){    //当前处于不可能状态的时候不执行）
+                    // this.$store.commit('setListIndex',this.listIndex);  //循环
+                    this.$store.commit('setIsPlay', true);
+                    this.toplay(this.listOfSongs[this.listIndex].songUrl);
+                }
+            }
+            if(this.playMethod == '随机播放'){
+                if(this.listIndex != -1 && this.listOfSongs.length > 1){    //当前处于不可能状态或者只有只有一首音乐的时候不执行）
+                    var randomIndex = Math.round(Math.random()*this.listOfSongs.length)   // 生成随机整数
+                    if(randomIndex == this.randomIndex){
+                        randomIndex = Math.round(Math.random()*this.listOfSongs.length)   // 和上一次生成的随机数相同就重新生成
+                    }
+                    this.randomIndex = randomIndex; //将本次随机数存储起来，如果下次一样，就重新随机
+                    this.$store.commit('setListIndex',randomIndex);  //随机播放
+                    this.toplay(this.listOfSongs[this.listIndex].songUrl);
+                }
+            }
+            
         },
         //播放音乐
         toplay: function(songUrl){
-            if(songUrl && songUrl != this.songUrl){
                 this.$store.commit('setId',this.listOfSongs[this.listIndex].songId);
                 this.$store.commit('setUrl',this.$store.state.configure.HOST+songUrl);
                 this.$store.commit('setPicUrl',this.$store.state.configure.HOST+this.listOfSongs[this.listIndex].songPic);
@@ -293,8 +367,8 @@ export default {
                 this.$store.commit('setIsActive',false);
                 //查询歌曲收藏状态
                 this.getACollectStatus(this.listOfSongs[this.listIndex].songId)
-                
-            }
+                //根据歌曲id, 将歌曲的播放量增加1
+                this.increasePlayback(this.listOfSongs[this.listIndex].songId);
         },
         //解析歌词
         parseLyric(text){
@@ -374,6 +448,10 @@ export default {
                         this.notify(res,'error');
                     }
                 })           
+        },
+        //根据歌曲id，将歌曲播放量+1
+        increasePlayback(songId){
+            increasePlayCount(songId);
         },
         //收藏
         collection() {

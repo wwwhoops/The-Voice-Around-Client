@@ -27,7 +27,7 @@ export default {
     TheFooter,
     SongAudio,
     TheAside,
-    PlayBar
+    PlayBar,
   },
   created () {
 //在页面加载时读取sessionStorage里的状态信息

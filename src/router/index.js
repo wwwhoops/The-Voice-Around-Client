@@ -11,6 +11,7 @@ import LoginIn from '@/pages/LoginIn'
 import Setting from '@/pages/Setting'
 import SingerAlbum from '@/pages/SingerAlbum'
 import SongListAlbum from '@/pages/SongListAlbum'
+import RankList from '@/pages/RankList'
 
 
 Vue.use(Router)
@@ -76,6 +77,11 @@ export default new Router({
       path: '/song-list-album/:id',
       name: 'song-list-album',
       component: SongListAlbum
+    },
+    {
+      path: '/rank-list',
+      name: 'rank-list',
+      component: RankList
     }
     
   ],

@@ -1,5 +1,5 @@
 import {mapGetters} from 'vuex';
-import {likeSongOfName,getACollect } from '../api/index';
+import {likeSongOfName,getACollect,increasePlayCount } from '../api/index';
 
 export const mixin = {
     computed: {
@@ -74,6 +74,12 @@ export const mixin = {
             this.$store.commit('setIsActive',false);
             //查询歌曲收藏状态
             this.getACollectStatus(id)
+            //根据歌曲id, 将歌曲的播放量增加1
+            this.increasePlayback(id);
+        },
+        //根据歌曲id，将歌曲播放量+1
+        increasePlayback(songId){
+            increasePlayCount(songId);
         },
         //解析歌词
         parseLyric(text){

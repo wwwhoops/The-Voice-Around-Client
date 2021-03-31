@@ -18,6 +18,10 @@ export const songOfSongId =(id) => get(`song/getASongBySongId?songId=${id}`);
 export const songOfSongIdAlias =(id) => get(`song/getASongBySongIdAlias?songId=${id}`);
 //根据歌曲名字模糊查询歌曲
 export const likeSongOfName =(keywords) => get(`song/getAllSongByKeywords?keywords=${keywords}`);
+//查询排行榜
+export const getRankList = () => get(`/song/getRankList`);
+//根据歌曲id增加歌曲播放了
+export const increasePlayCount =(songId) => get(`song/increasePlayCount?songId=${songId}`);
 
 //============歌单相关================
 //查询歌单
@@ -78,3 +82,6 @@ export const setCollect =(collect) => post(`/collect/addCollect`,collect);
 export const getACollect =(userId, songId) => get(`/collect/getACollect?userId=${userId}&songId=${songId}`);
 //指定用户的收藏列表
 export const getCollectOfUserId = (userId) => get(`/collect/getCollectByUserId?userId=${userId}`);
+
+
+
