@@ -183,12 +183,15 @@ export default {
         changePlayMethod(playMethod){
             if(playMethod == '列表循环'){
                 this.playMethod = this.playMethods[1];
+                this.notify('切换到单曲循环','success');
             }
             if(playMethod == '单曲循环'){
                 this.playMethod = this.playMethods[2];
+                this.notify('切换到随机播放','success');
             }
             if(playMethod == '随机播放'){
                 this.playMethod = this.playMethods[0];
+                this.notify('切换到列表循环','success');
             }
         },
 
