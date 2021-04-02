@@ -37,7 +37,7 @@
                         <div>{{this.title}}</div>
                         <div>{{this.artist}}</div>
                     </div>
-                    <div ref="progress" class="progress" @mousemove="mousemove">
+                    <div ref="progress" class="progress1" @mousemove="mousemove">
                         <!-- 进度条 -->
                         <div ref="bg" class="bg" @click="updatemove">
                             <div ref="curProgress" class="cur-progress" :style="{width:curLength+'%'}"></div>
@@ -138,7 +138,6 @@ export default {
             'loginIn',              //用户是否已登录
             'userId',               //当前登录用户的id
             'isActive',             //当前播放的歌曲是否已收藏
-            'showMethod',            //是否显示播放顺序列表
         ])
     },
     watch:{
