@@ -8,7 +8,7 @@
         </svg>
         <span>声临其境</span>
     </div>
-    <ul class="navbar">
+    <ul class="navbar1">
         <li :class="{active: item.name == activeName}" v-for="item in navMsg" :key="item.path" @click="goPage(item.path,item.name)">
             {{item.name}}
         </li>

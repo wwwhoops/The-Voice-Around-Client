@@ -1,6 +1,6 @@
 <template>
     <div class="desc">
-        <div :style="`backgroundImage: 'url('+ ${backgroundImg} + ')'`" id="bkg" class="bkg"></div>
+        <div :style="{backgroundImage: 'url('+ backgroundImg + ')'}" id="bkg" class="bkg"></div>
             <img :src="backgroundImg" id="songImgInLyric">
             <div class="song-lyric">
                 <h1 class="lyric-title">歌词</h1>
@@ -30,7 +30,8 @@ export default {
             lyr: [],         //当前歌曲的歌词
             // lyric111: []  //在歌词页面上下曲切换传递的歌词
             backgroundImg: null,
-            isReloadData: true   //刷新标识
+            isReloadData: true,   //刷新标识
+            isScroll: false,      //鼠标是否被滚动
         }
     },
     computed: {
@@ -64,19 +65,28 @@ export default {
                         if(i>=0){
                             document.querySelectorAll('.has-lyric li')[i].style.color = '#FFFF00';
                             document.querySelectorAll('.has-lyric li')[i].style.fontSize = '25px';
+                            if(!this.isScroll){
+                                this.lyricScroll(i)
+                            }
                         }
                     }
                 }
             }
-        }
+        },
     },
-    // 刷新当前页面，在修改数据之后 this.reload 一下就可以完成刷新当前这个指定标签的刷新
-    reload () {
-      this.isReloadData = false;
-      this.$nextTick(() => {
-        this.isReloadData = true;
-      })
+    methods:{
+        lyricScroll(i){
+            window.scrollTo(0,(i-3)*40); //40为每一句歌词的高度，-3是为了将歌词保持在中间
+        },
     }
+    // 刷新当前页面，在修改数据之后 this.reload 一下就可以完成刷新当前这个指定标签的刷新
+    // 已经写在App.vue里面了，此处注释掉
+    // reload () {
+    //   this.isReloadData = false;
+    //   this.$nextTick(() => {
+    //     this.isReloadData = true;
+    //   })
+    // }
 }
 
 </script>

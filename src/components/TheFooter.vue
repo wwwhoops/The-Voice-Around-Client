@@ -12,9 +12,9 @@
             <!-- <p style="display:inline">关于 | </p> -->
             <ul style="display:inline">
                 <li class="wechat">
-                    <span>获取帮助 | </span>
+                    <span>支持 | </span>
                     <div class="QR-code">
-                        <img src="../assets/img/qrcode.jpg" class="qrcode-img">
+                        <img src="../assets/img/qrcode_pay.jpg" class="qrcode-img">
                     </div>
                 </li>
             </ul>
@@ -29,9 +29,18 @@
             <!-- <p style="display:inline">条款 | </p> -->
             <ul style="display:inline">
                 <li class="wechat">
+                    <a href="http://www.taliy4h.com:9527" target="_blank" class="jump-link">
+                    <span>管理员登录 | </span>
+                    </a>
+                </li>
+            </ul>
+            <ul style="display:inline">
+                <li class="wechat">
                     <span>成为管理员</span>
                     <div class="QR-code">
                         <img src="../assets/img/qrcode.jpg" class="qrcode-img">
+                        <h4 class="text">&nbsp;&nbsp;&nbsp;&nbsp;
+                            WeChat Or Email Below</h4>
                     </div>
                 </li>
             </ul>
@@ -72,5 +81,9 @@ export default {
             width: 300px;
         }
     }
+}
+.jump-link{
+    text-decoration: none;
+    color: #000000
 }
 </style>

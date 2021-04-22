@@ -7,7 +7,8 @@
   width: 100%;
   height: $header-height;
   line-height: $header-height;
-  padding: $header-padding;
+  // padding: $header-padding;
+  padding-left: 60px;
   margin: $header-margin;
   background-color: $theme-header-color;
   @include box-shadow($box-shadow);
@@ -30,7 +31,7 @@
 }
 
 /*nav*/
-.navbar {
+.navbar1 {
   height: $header-height;
   white-space: nowrap;
   li {

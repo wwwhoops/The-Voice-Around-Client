@@ -44,4 +44,8 @@ export default {
 
 <style lang="scss" scoped>
 @import '../assets/css/album-content.scss';
+.song-item{
+    display: flex;
+    justify-content: 25%;
+}
 </style>

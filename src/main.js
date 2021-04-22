@@ -10,9 +10,9 @@ import '@/assets/js/iconfont1.js'
 import '@/assets/js/iconfont2.js'
 import '@/assets/js/iconfont3.js'
 import QRCode from 'qrcodejs2'
-import $ from 'jquery'
-import 'bootstrap/dist/js/bootstrap.js'
-import 'bootstrap/dist/css/bootstrap.css'
+// import $ from 'jquery'
+// import 'bootstrap/dist/js/bootstrap.js'
+// import 'bootstrap/dist/css/bootstrap.css'
 Vue.prototype.$QRCode = function()
 {
   let qrcode = new QRCode('qrcode', {
