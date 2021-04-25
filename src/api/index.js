@@ -6,6 +6,8 @@ import {get,post} from "./http";
 export const getAllSinger =() => get(`singer/allSinger`);
 //根据性别查询歌手
 export const getSingerOfSex = (sex) => get(`singer/singerBySex?sex=${sex}`);
+//根据图片名模糊查询歌手
+export const getSingerByPicName = (picImg) => get(`singer/getSingerByPicName?picName=${picImg}`);
 
 //============歌曲相关================
 //根据歌手id查询歌曲

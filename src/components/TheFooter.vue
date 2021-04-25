@@ -15,6 +15,8 @@
                     <span>支持 | </span>
                     <div class="QR-code">
                         <img src="../assets/img/qrcode_pay.jpg" class="qrcode-img">
+                        <h4 class="text">&nbsp;&nbsp;&nbsp;&nbsp;
+                            WeChat Pay</h4>
                     </div>
                 </li>
             </ul>
@@ -36,7 +38,7 @@
             </ul>
             <ul style="display:inline">
                 <li class="wechat">
-                    <span>成为管理员</span>
+                    <span>成为管理员 | </span>
                     <div class="QR-code">
                         <img src="../assets/img/qrcode.jpg" class="qrcode-img">
                         <h4 class="text">&nbsp;&nbsp;&nbsp;&nbsp;
@@ -44,9 +46,18 @@
                     </div>
                 </li>
             </ul>
+            <ul style="display:inline">
+                <li class="wechat">
+                    <span>资源建议</span>
+                    <div class="QR-code">
+                        <p name="about" class="text">请将需要添加的歌曲名、歌手名或其他资源建议发送到底部邮箱。
+                            您也可以在左侧“成为管理员”申请管理员账号加入管理团队以维护本站内容。</p>
+                    </div>
+                </li>
+            </ul>
             <!-- <p style="display:inline">反馈</p> -->
         </div>
-        <p>Copyright ©2021 Touch: taliyah7196@163.com</p>
+        <p>Copyright ©2021 Contact: taliyah7196@163.com</p>
     </div>
     
 </template>
