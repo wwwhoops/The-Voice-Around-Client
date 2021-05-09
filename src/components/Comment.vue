@@ -15,11 +15,11 @@
         <ul class="popular" v-for="(item,index) in commentList" :key="index">
             <li>
                 <div class="popular-img">
-                    <img :src="attachImageUrl(userPic[index])">
+                    <img :src="attachImageUrl(item.avatar)">
                 </div>
                 <div class="popular-msg">
                     <ul>
-                        <li class="name">{{userName[index]}}</li>
+                        <li class="name">{{item.username}}</li>
                         <li class="time">{{item.createTime}}</li>
                         <li class="content">{{item.content}}</li>
                     </ul>
@@ -43,6 +43,7 @@ import {setComment,setLike,getAllComment,getUserOfId} from '../api/index';
 export default {
     name: 'comment',
     mixins: [mixin],
+    inject:['reload'],
     props: [
         'playId',       //歌曲或歌单id
         'type'          //0歌曲、1歌单
@@ -62,6 +63,7 @@ export default {
             userPic: [],        //用户的头像
             userName: [],       //用户的昵称
             comment: {},        //评论对象
+            commentIndex: 0        //评论index
         }
     },
     mounted(){
@@ -71,15 +73,6 @@ export default {
         //提交评论
         postComment(){
             if(this.loginIn){
-                // let params = new URLSearchParams();
-                // if(this.type == 0){
-                //     params.append('songId',this.playId);
-                // }else{
-                //     params.append('songListId',this.playId);
-                // }
-                // params.append('userId',this.userId);
-                // params.append('type',this.type);
-                // params.append('content',this.textarea);
 
                 if(this.type == 0){
                     this.comment.songId = this.playId;
@@ -96,7 +89,8 @@ export default {
                         if(res.code == 1){
                             this.notify(res.message,'success');
                             this.textarea='';
-                            this.getComment();
+                            // this.getComment();
+                            this.reload();
                         }else{
                             this.notify(res.message,'error');
                         }
@@ -113,26 +107,23 @@ export default {
         getComment(){
             getAllComment(this.type,this.playId)
                 .then(res => {
-                        this.commentList = res.data;
-                        for(let item of res.data){
-                            this.getUsers(item.consumerId);
-                        }
+                        this.commentList = res.data;                      
                     })
                     .catch(err =>{
                         this.notify('评论加载失败','error');
                     })
         },
         //获取用户的头像和昵称
-        getUsers(id){
-            getUserOfId(id)
-                .then(res => {
-                        this.userPic.push(res.data.avatar);
-                        this.userName.push(res.data.username);
-                    })
-                    .catch(err =>{
-                        this.notify('出错了','error');
-                    })
-        },
+        // getUsers(id){
+        //     getUserOfId(id)
+        //         .then(res => {
+        //             this.userPic.push(res.data.avatar);
+        //             this.userName.push(res.data.username);
+        //             })
+        //             .catch(err =>{
+        //                 this.notify('出错了','error');
+        //             })
+        // },
         //给某一个评论点赞
         postUp(id,userId,index){
             if(this.loginIn){

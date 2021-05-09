@@ -14,21 +14,28 @@
                 <div v-else class="no-lyric" key="no-lyric">
                     <span>暂无歌词</span>
                 </div>
+                <comment :playId="id" :type="0"></comment>
+                
             </div>
     </div>  
 </template>
 <script>
 import {mixin} from '../mixins';
 import {mapGetters} from 'vuex';
+import Comment from "../components/Comment";
 
 export default {
     name: 'lyric',
     mixins: [mixin],
+    components:{
+        Comment
+    },
     inject:['reload'],
     data(){
         return {
             lyr: [],         //当前歌曲的歌词
             // lyric111: []  //在歌词页面上下曲切换传递的歌词
+            // songId: '',    //前面传来的歌曲id
             backgroundImg: null,
             isReloadData: true,   //刷新标识
             isScroll: false,      //鼠标是否被滚动
@@ -45,6 +52,7 @@ export default {
         ])
     },
     created(){
+        // this.songId = this.$route.params.id;
         this.lyr = this.lyric; 
         this.backgroundImg = this.picUrl;       
     },
