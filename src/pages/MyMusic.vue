@@ -8,17 +8,25 @@
                 <li>昵称：{{username}}</li>
                 <li>性别：{{userSex}}</li>
                 <li>生日：{{birth}}</li>
-                <li>故乡：{{location}}</li>
+                <li>地区：{{location}}</li>
             </ul>
         </div>
         <div class="album-content">
-            <div class="album-title">
-                个性签名：{{introduction}}
+            <div class="introduction">
+                签名：{{introduction}}
             </div>
             <div class="songs-body">
-                <album-content :songList="collectList">
-                    <template slot="title">我的收藏</template>
-                </album-content>
+                <div class="leftCol">
+                    <ul class="setting-aside">
+                        <li v-for="(item,index) in slefList" :key="index" :class="{activeColor: activeName==item.name}"
+                            @click="handleClick(item)">
+                            {{item.name}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="contentCol">
+                    <component :is="componentSrc"></component>
+                </div>
             </div>
         </div>
     </div>
@@ -27,14 +35,18 @@
 <script>
 import {mixin} from '../mixins';
 import {mapGetters} from 'vuex';
-import {getUserOfId,getCollectOfUserId,songOfSongIdAlias} from '../api/index';
-import AlbumContent from "../components/AlbumContent";
+import {getUserOfId} from '../api/index';
+import AlbumContent from '../components/AlbumContent';
+import Collect from '../components/Collect';
+import History from '../components/History';
 
 export default {
     name: 'my-music',
     mixins: [mixin],
     components:{
-        AlbumContent
+        AlbumContent,
+        Collect,
+        History
     },
     data(){
         return {
@@ -46,6 +58,12 @@ export default {
             introduction: '', //签名
             collection: [],     //收藏的歌曲列表
             collectList: [],    //收藏的歌曲列表（带歌曲详情）
+            slefList: [
+                {name: '我的收藏', path: 'Collect'},
+                {name: '最近播放', path: 'History'}
+            ],
+            activeName: '我的收藏',
+            componentSrc: 'Collect'
         }
     },
     computed:{
@@ -56,9 +74,12 @@ export default {
     },
     mounted(){
         this.getMsg(this.userId);
-        this.getCollection(this.userId);
     },
     methods:{
+        handleClick(item){
+            this.activeName = item.name;
+            this.componentSrc = item.path;
+        },
         getMsg(userId){
             getUserOfId(userId)
                 .then(res =>{
@@ -77,33 +98,6 @@ export default {
                     console.log(err);
                 })
         },
-        //获取我的收藏列表
-        getCollection(userId){
-            getCollectOfUserId(userId)
-                .then(res =>{
-                        this.collection = res.data;
-                        //通过歌曲id获取歌曲信息   
-                        for(let item of this.collection){
-                            this.getSongsOfIds(item.songId);
-                        }             
-                    })
-                .catch(err => {
-                    console.log(err);
-                })
-        },
-        //通过歌曲id获取歌曲信息   
-        getSongsOfIds(id){
-            songOfSongIdAlias(id)
-                .then(res =>{
-                    for(let i of res.data){
-                        this.collectList.push(i);
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-                this.$store.commit('setListOfSongs',this.collectList);
-        }
     }
 }
 </script>

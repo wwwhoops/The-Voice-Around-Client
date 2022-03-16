@@ -16,44 +16,6 @@
   }
 }
 
-//////////////////////////////
-
-/* 右边内容 */
-.contentCol {
-  flex: 1;
-  padding-top: 20px;
-}
-
-.activeColor {
-  background-color: $color-blue-shallow !important;
-  color: $color-white;
-}
-
-.setting-aside {
-  // width: 100%;
-  li {
-    // display: block;
-    height: 40px;
-    line-height: 40px;
-    font-size: 18px;
-    padding: 0 10px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    margin-right: 2px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: $color-blue-active;
-      color: $color-white;
-    }
-    &:active {
-      background-color: $color-blue-shallow;
-    }
-  }
-}
-
-/////////////////////
-
 /*左侧*/
 .album-slide {
   float: left;
@@ -98,12 +60,7 @@
   /*歌单题目*/
   .album-title {
     font-size: 30px;
-    font-weight: 400;
-  }
-  //个性签名
-  .introduction{
-    font-size: 18px;
-    font-weight: 300;
+    font-weight: 600;
   }
 
   .songs-body {

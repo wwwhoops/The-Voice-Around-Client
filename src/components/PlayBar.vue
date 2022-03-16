@@ -26,7 +26,7 @@
             </div>
             <!-- 歌曲图片 -->
             <div class="item-img" @click="toLyric">
-                <img :src="picUrl"/>
+                <img :src="picUrl" style="cursor:pointer;"/>
             </div>
             <!-- 播放进度 -->
             <div class="playing-speed">
@@ -98,7 +98,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import { download,setCollect,increasePlayCount,getACollect } from '../api/index';
+import { download,setCollect,increasePlayCount,getACollect, createPlayHistory } from '../api/index';
 
 export default {
     name: 'play-bar',
@@ -371,6 +371,8 @@ export default {
                 this.getACollectStatus(this.listOfSongs[this.listIndex].songId)
                 //根据歌曲id, 将歌曲的播放量增加1
                 this.increasePlayback(this.listOfSongs[this.listIndex].songId);
+                //生成播放记录
+                this.addPlayHistory(this.listOfSongs[this.listIndex].songId)
         },
         //解析歌词
         parseLyric(text){
@@ -455,6 +457,12 @@ export default {
         increasePlayback(songId){
             increasePlayCount(songId);
         },
+
+        //根据用户id和歌曲id，生成播放记录
+        addPlayHistory(songId){
+            createPlayHistory(this.userId, songId);
+        },
+        
         //收藏
         collection() {
             if(this.loginIn){

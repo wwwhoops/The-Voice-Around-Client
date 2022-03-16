@@ -13,7 +13,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import { increasePlayCount,getACollect } from '../api/index';
+import { increasePlayCount,getACollect, createPlayHistory } from '../api/index';
 
 export default {
     name: 'the-aside',
@@ -71,21 +71,16 @@ export default {
             this.getACollectStatus(id)
             //根据歌曲id, 将歌曲的播放量增加1
             this.increasePlayback(id);
-            // if(this.loginIn){
-            //     getCollectOfUserId(this.userId)
-            //         .then(res =>{
-            //             for(let item of res){
-            //                 if(item.songId == id){
-            //                     this.$store.commit('setIsActive',true);
-            //                     break;
-            //                 }
-            //             }
-            //         })
-            // }
+            //生成播放记录
+            this.addPlayHistory(id)
         },
         //根据歌曲id，将歌曲播放量+1
         increasePlayback(songId){
             increasePlayCount(songId);
+        },
+        //根据用户id和歌曲id，生成播放记录
+        addPlayHistory(songId){
+            createPlayHistory(this.userId, songId);
         },
         //解析歌词
         parseLyric(text){

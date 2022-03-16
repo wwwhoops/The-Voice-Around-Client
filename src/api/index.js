@@ -22,7 +22,7 @@ export const songOfSongIdAlias =(id) => get(`song/getASongBySongIdAlias?songId=$
 export const likeSongOfName =(keywords) => get(`song/getAllSongByKeywords?keywords=${keywords}`);
 //查询排行榜
 export const getRankList = () => get(`/song/getRankList`);
-//根据歌曲id增加歌曲播放了
+//根据歌曲id增加歌曲播放量
 export const increasePlayCount =(songId) => get(`song/increasePlayCount?songId=${songId}`);
 
 //============歌单相关================
@@ -77,13 +77,18 @@ export const getAllComment = (type,id) => {
     }
 }
 
-//===============收藏===================
+//===============我的音乐===================
 //新增收藏
 export const setCollect =(collect) => post(`/collect/addCollect`,collect);
 //查询歌曲的收藏状态
 export const getACollect =(userId, songId) => get(`/collect/getACollect?userId=${userId}&songId=${songId}`);
 //指定用户的收藏列表
 export const getCollectOfUserId = (userId) => get(`/collect/getCollectByUserId?userId=${userId}`);
+
+//播放记录
+export const getHistoryByUserId = (userId) => get(`/playHistory/getHistoryByUserId?userId=${userId}`);
+//生成播放记录
+export const createPlayHistory =(userId, songId) => get(`/playHistory/createPlayHistory?userId=${userId}&songId=${songId}`);
 
 
 
