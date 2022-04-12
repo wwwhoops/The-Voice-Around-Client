@@ -35,11 +35,12 @@ export default {
         this.getHistory(this.userId);
     },
     methods:{
-        //获取我的收藏列表
+        //获取我的播放历史
         getHistory(userId){
             getHistoryByUserId(userId)
                 .then(res =>{
-                        this.history = res.data;            
+                        this.history = res.data;
+                        this.$store.commit('setListOfSongs',this.history);            
                     })
                 .catch(err => {
                     console.log(err);

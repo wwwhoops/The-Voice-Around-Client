@@ -11,7 +11,7 @@
 <script>
 import {mixin} from '../mixins';
 import {mapGetters} from 'vuex';
-import {getUserOfId,getCollectOfUserId,songOfSongIdAlias} from '../api/index';
+import {getCollectOfUserId,songOfSongIdAlias} from '../api/index';
 import AlbumContent from "../components/AlbumContent";
 
 export default {

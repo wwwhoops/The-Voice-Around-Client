@@ -9,6 +9,7 @@
                 <li>性别：{{userSex}}</li>
                 <li>生日：{{birth}}</li>
                 <li>地区：{{location}}</li>
+                <li>曲风偏好：{{likeStyle}}</li>
             </ul>
         </div>
         <div class="album-content">
@@ -35,7 +36,7 @@
 <script>
 import {mixin} from '../mixins';
 import {mapGetters} from 'vuex';
-import {getUserOfId} from '../api/index';
+import {getUserOfId, selectStyleById} from '../api/index';
 import AlbumContent from '../components/AlbumContent';
 import Collect from '../components/Collect';
 import History from '../components/History';
@@ -56,6 +57,7 @@ export default {
             birth: '',        //生日
             location: '',     //故乡
             introduction: '', //签名
+            likeStyle: '', //曲风偏好
             collection: [],     //收藏的歌曲列表
             collectList: [],    //收藏的歌曲列表（带歌曲详情）
             slefList: [
@@ -74,6 +76,7 @@ export default {
     },
     mounted(){
         this.getMsg(this.userId);
+        this.getStyle(this.userId);
     },
     methods:{
         handleClick(item){
@@ -92,12 +95,21 @@ export default {
                     }
                     this.birth = this.attachBirth(res.data.birth);
                     this.location = res.data.location;
-                    this.introduction = res.data.introduction;            
+                    this.introduction = res.data.introduction;        
                 })
                 .catch(err => {
                     console.log(err);
                 })
         },
+        getStyle(userId){
+            selectStyleById(userId)
+                .then(res =>{
+                    this.likeStyle = res.data;          
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
     }
 }
 </script>

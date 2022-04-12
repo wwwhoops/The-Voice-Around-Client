@@ -25,6 +25,8 @@ export const getRankList = () => get(`/song/getRankList`);
 //根据歌曲id增加歌曲播放量
 export const increasePlayCount =(songId) => get(`song/increasePlayCount?songId=${songId}`);
 
+
+
 //============歌单相关================
 //查询歌单
 export const getAllSongList =() => get(`songList/getAllSongList`);
@@ -33,6 +35,8 @@ export const getSongListOfLikeTitle = (keywords) => get(`songList/getAllSongList
 //根据风格模糊查询歌单列表
 // export const getSongListOfLikeStyle = (keywords) => get(`songList/getAllSongListByKeywords?keywords=${keywords}`);
 
+//推荐歌单
+export const getRecommendSongList = (userId) => get(`/songList/getRecommendSongList?userId=${userId}`);
 
 //============歌单的歌曲相关============
 //根据歌单id查询歌曲列表
@@ -47,6 +51,8 @@ export const SignUp =(params) => post(`/consumer/addConsumer`,params);
 export const loginIn =(params) => post(`/consumer/login`,params);
 //根据用户id查询该用户的详细信息
 export const getUserOfId =(id) => get(`/consumer/selectInfoById?id=${id}`);
+//根据用户id查询曲风偏好
+export const selectStyleById =(id) => get(`/consumer/selectStyleById?id=${id}`);
 //更新用户信息
 export const updateUserMsg =(consumer) => post(`/consumer/updateConsumerInfo`,consumer);
 

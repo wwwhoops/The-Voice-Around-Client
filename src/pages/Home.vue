@@ -11,7 +11,8 @@
 <script>
 import Swiper from "../components/Swiper";
 import contentList from '../components/ContentList';
-import {getAllSinger,getAllSongList} from '../api/index';
+import {mapGetters} from 'vuex';
+import {getAllSinger,getAllSongList,getRecommendSongList} from '../api/index';
 export default {
   name: 'home',
   components: {
@@ -21,19 +22,27 @@ export default {
   data () {
     return {
       songsList: [
-        {name:"歌单",list: []},
-        {name:"歌手",list: []}
+        {name:"精选歌单",list: []},
+        {name:"热门歌手",list: []}
       ]
     }
   },
+  computed:{
+        ...mapGetters([
+            'userId',           //当前登录用户id
+        ])
+    },
   created () {
-   this.getSongList();
+   this.getRecommendSongList1(this.userId);
    this.getSinger();
   },
   methods: {
-    getSongList(){                      //获取前十条歌单
-      getAllSongList().then((res) => {
-        this.songsList[0].list = res.data.slice(0,10);
+    getRecommendSongList1(userId){
+      if(userId == null){
+        userId = ""
+      }
+      getRecommendSongList(userId).then((res) => {
+        this.songsList[0].list = res.data
       }).catch((err) => { 
         console.log(err);
       })
