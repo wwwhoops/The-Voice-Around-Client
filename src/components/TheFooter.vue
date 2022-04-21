@@ -31,7 +31,7 @@
             <!-- <p style="display:inline">条款 | </p> -->
             <ul style="display:inline">
                 <li class="wechat">
-                    <a href="http://121.5.228.245:9527" target="_blank" class="jump-link">
+                    <a href="http://127.0.0.1:9527" target="_blank" class="jump-link">
                     <span>管理员登录 | </span>
                     </a>
                 </li>
